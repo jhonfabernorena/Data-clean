@@ -19,8 +19,7 @@ export class FileService {
       Readable.from(file.buffer)
         .pipe(csv.parse({ headers: true }))
         .on("data", (row) => rows.push(row))
-        .on("end", () => {
-          // Eliminar duplicados
+        .on("end", () => 
           if (options.removeDuplicates) {
             const uniqueRows = Array.from(
               new Set(rows.map((row) => JSON.stringify(row))),
@@ -28,13 +27,7 @@ export class FileService {
             rows.length = 0;
             rows.push(...uniqueRows);
           }
-
-          // Validar formato
-          if (options.validateFormat) {
-            // Implementa la validación de formato aquí
-          }
-
-          // Ordenar
+      
           if (options.sort) {
             rows.sort((a, b) => {
               if (a[options.sort.column] > b[options.sort.column]) {
@@ -47,7 +40,6 @@ export class FileService {
             });
           }
 
-          // Crear archivo CSV procesado
           const processedCSVStream = new stream.PassThrough();
           const writeStream = csv.format({ headers: true });
 
