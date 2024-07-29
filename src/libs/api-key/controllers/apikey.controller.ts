@@ -5,6 +5,7 @@ import {
   Get,
   Query,
   InternalServerErrorException,
+  UseGuards,
 } from "@nestjs/common";
 import {
   ApiTags,
@@ -20,16 +21,14 @@ import { ApiKeyService } from "../service/apiKey.service";
 import { CreateApiKeyDto } from "../dtos/create-apy-key.dto";
 import { validateKeyDto } from "../dtos/validatekey.dto";
 
-@ApiTags("Key Subscriptions")
-@Controller("key-subscription")
+
+
+@ApiTags("Api-key")
+@Controller("api-key")
 export class ApiKeyController {
   constructor(private readonly apiKeyService: ApiKeyService) {}
 
   @Post("new")
-  @ApiHeader({
-    name: "x-api-key",
-    description: "API key needed to access this endpoint",
-  })
   @ApiOperation({ summary: "Create a new API key" })
   @ApiBody({ type: CreateApiKeyDto })
   @ApiResponse({
@@ -71,14 +70,14 @@ export class ApiKeyController {
     name: "x-api-key",
     description: "API key needed to access this endpoint",
   })
-  @ApiOperation({ summary: "Get API keys by type and limit" })
+  @ApiOperation({ summary: "Get API keys by limit" })
   @ApiQuery({ name: "limit", type: Number, required: true })
   @ApiResponse({ status: 200, description: "API keys retrieved successfully." })
   @ApiBadRequestResponse({ description: "Invalid query parameters provided." })
   @ApiInternalServerErrorResponse({ description: "Internal server error." })
-  async getApiKeys(@Query("limit") limit: number, @Query("type") type: string) {
+  async getApiKeys(@Query("limit") limit: number) {
     try {
-      return await this.apiKeyService.getApiKeys(limit, type);
+      return await this.apiKeyService.getApiKeys(limit);
     } catch (error) {
       throw new InternalServerErrorException(error.message);
     }

@@ -21,8 +21,8 @@ export class ApiKeyService {
     return apiKeyData;
   }
 
-  async getApiKeys(limit: number, type: string) {
-    const apiKeyData = await this.apiKeyModel.find({ type }).limit(limit);
+  async getApiKeys(limit: number) {
+    const apiKeyData = await this.apiKeyModel.find().limit(limit);
     if (!apiKeyData) {
       throw new NotFoundException("API key not found");
     }
