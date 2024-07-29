@@ -1,21 +1,17 @@
-import { ApiProperty, PartialType } from '@nestjs/swagger';
+import { ApiProperty, PartialType } from "@nestjs/swagger";
 import {
   IsString,
   IsOptional,
   IsInt,
   IsBoolean,
   IsISO8601,
-} from 'class-validator';
-import { CreateApiKeyDto } from './create-apy-key.dto';
+} from "class-validator";
+import { CreateApiKeyDto } from "./create-apy-key.dto";
 
-export class UpdateApiKeyDto extends PartialType(
-  CreateApiKeyDto,
-) {
-
-
+export class UpdateApiKeyDto extends PartialType(CreateApiKeyDto) {
   @ApiProperty({
-    description: 'API key for the subscription',
-    example: 'abc123',
+    description: "API key for the subscription",
+    example: "abc123",
     required: false,
   })
   @IsString()
@@ -23,7 +19,7 @@ export class UpdateApiKeyDto extends PartialType(
   apiKey?: string;
 
   @ApiProperty({
-    description: 'Usage count of the API key subscription',
+    description: "Usage count of the API key subscription",
     example: 0,
     required: false,
   })
@@ -32,7 +28,7 @@ export class UpdateApiKeyDto extends PartialType(
   usageCount?: number;
 
   @ApiProperty({
-    description: 'Usage limit for the API key subscription',
+    description: "Usage limit for the API key subscription",
     example: 100,
     required: false,
   })
@@ -41,7 +37,7 @@ export class UpdateApiKeyDto extends PartialType(
   limit?: number;
 
   @ApiProperty({
-    description: 'Status of the API key subscription',
+    description: "Status of the API key subscription",
     example: true,
     required: false,
   })
@@ -50,8 +46,8 @@ export class UpdateApiKeyDto extends PartialType(
   isActive?: boolean;
 
   @ApiProperty({
-    description: 'Creation date of the subscription',
-    example: '2023-07-11T00:00:00.000Z',
+    description: "Creation date of the subscription",
+    example: "2023-07-11T00:00:00.000Z",
     required: false,
   })
   @IsISO8601()
@@ -59,8 +55,8 @@ export class UpdateApiKeyDto extends PartialType(
   createdAt?: Date | null;
 
   @ApiProperty({
-    description: 'User who created the subscription',
-    example: 'user1',
+    description: "User who created the subscription",
+    example: "user1",
     required: false,
   })
   @IsString()
@@ -68,8 +64,8 @@ export class UpdateApiKeyDto extends PartialType(
   createBy?: string;
 
   @ApiProperty({
-    description: 'Last updated date of the subscription',
-    example: '2023-07-12T00:00:00.000Z',
+    description: "Last updated date of the subscription",
+    example: "2023-07-12T00:00:00.000Z",
     required: false,
   })
   @IsISO8601()
@@ -77,8 +73,8 @@ export class UpdateApiKeyDto extends PartialType(
   updatedAt?: Date | null;
 
   @ApiProperty({
-    description: 'User who last updated the subscription',
-    example: 'user2',
+    description: "User who last updated the subscription",
+    example: "user2",
     required: false,
   })
   @IsString()
@@ -86,8 +82,8 @@ export class UpdateApiKeyDto extends PartialType(
   updateBy?: string;
 
   @ApiProperty({
-    description: 'Deletion date of the subscription',
-    example: '2023-07-13T00:00:00.000Z',
+    description: "Deletion date of the subscription",
+    example: "2023-07-13T00:00:00.000Z",
     required: false,
   })
   @IsISO8601()
@@ -95,8 +91,8 @@ export class UpdateApiKeyDto extends PartialType(
   deletedAt?: Date | null;
 
   @ApiProperty({
-    description: 'User who deleted the subscription',
-    example: 'user3',
+    description: "User who deleted the subscription",
+    example: "user3",
     required: false,
   })
   @IsString()
