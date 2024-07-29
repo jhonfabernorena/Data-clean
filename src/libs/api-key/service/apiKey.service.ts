@@ -1,34 +1,31 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { CreateApiKeyDto } from '../dtos/create-apy-key.dto';
-import * as crypto from 'crypto';
-import { ApiKey } from '../entities/apikey.entity';
-
+import { Injectable, NotFoundException } from "@nestjs/common";
+import { InjectModel } from "@nestjs/mongoose";
+import { Model } from "mongoose";
+import { CreateApiKeyDto } from "../dtos/create-apy-key.dto";
+import { ApiKey } from "../entities/apikey.entity";
 
 @Injectable()
 export class ApiKeyService {
-    constructor(@InjectModel(ApiKey.name) private apiKeyModel: Model<ApiKey>) {}
+  constructor(@InjectModel(ApiKey.name) private apiKeyModel: Model<ApiKey>) {}
 
-    async create(CreateApiKeyDto: CreateApiKeyDto) {
-        const newApiKey = new this.apiKeyModel(CreateApiKeyDto);
-        return await newApiKey.save();
+  async create(CreateApiKeyDto: CreateApiKeyDto) {
+    const newApiKey = new this.apiKeyModel(CreateApiKeyDto);
+    return await newApiKey.save();
+  }
+
+  async validateApiKey(apiKey: string) {
+    const apiKeyData = await this.apiKeyModel.findOne({ apiKey });
+    if (!apiKeyData) {
+      throw new NotFoundException("API key not found");
     }
+    return apiKeyData;
+  }
 
-    async validateApiKey(apiKey: string) {
-        const apiKeyData = await this.apiKeyModel.findOne({ apiKey });
-        if (!apiKeyData) {
-            throw new NotFoundException('API key not found');
-        }
-        return apiKeyData;
+  async getApiKeys(limit: number, type: string) {
+    const apiKeyData = await this.apiKeyModel.find({ type }).limit(limit);
+    if (!apiKeyData) {
+      throw new NotFoundException("API key not found");
     }
-
-
-    async getApiKeys(limit: number, type: string) {
-        const apiKeyData = await this.apiKeyModel.find({ type }).limit(limit);
-        if (!apiKeyData) {
-            throw new NotFoundException('API key not found');
-        }
-        return apiKeyData;
-    }
+    return apiKeyData;
+  }
 }

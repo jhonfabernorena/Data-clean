@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty } from "@nestjs/swagger";
 import {
   IsString,
   IsNotEmpty,
@@ -6,20 +6,19 @@ import {
   IsInt,
   IsBoolean,
   IsISO8601,
-} from 'class-validator';
+} from "class-validator";
 
 export class CreateApiKeyDto {
-
   @ApiProperty({
-    description: 'API key for the subscription',
-    example: 'abc123',
+    description: "API key for the subscription",
+    example: "abc123",
   })
   @IsString()
   @IsOptional()
   apiKey?: string;
 
   @ApiProperty({
-    description: 'Usage count of the API key subscription',
+    description: "Usage count of the API key subscription",
     example: 0,
     required: false,
   })
@@ -28,7 +27,7 @@ export class CreateApiKeyDto {
   usageCount?: number = 0;
 
   @ApiProperty({
-    description: 'Usage limit for the API key subscription',
+    description: "Usage limit for the API key subscription",
     example: 100,
   })
   @IsInt()
@@ -36,7 +35,7 @@ export class CreateApiKeyDto {
   limit: number;
 
   @ApiProperty({
-    description: 'Status of the API key subscription',
+    description: "Status of the API key subscription",
     example: true,
     required: false,
   })
@@ -45,8 +44,8 @@ export class CreateApiKeyDto {
   isActive?: boolean = true;
 
   @ApiProperty({
-    description: 'Creation date of the subscription',
-    example: '2023-07-11T00:00:00.000Z',
+    description: "Creation date of the subscription",
+    example: "2023-07-11T00:00:00.000Z",
     required: false,
   })
   @IsISO8601()
@@ -54,8 +53,8 @@ export class CreateApiKeyDto {
   createdAt?: Date | null = null;
 
   @ApiProperty({
-    description: 'User who created the subscription',
-    example: 'user1',
+    description: "User who created the subscription",
+    example: "user1",
     required: false,
   })
   @IsString()
@@ -63,8 +62,8 @@ export class CreateApiKeyDto {
   createBy?: string;
 
   @ApiProperty({
-    description: 'Last updated date of the subscription',
-    example: '2023-07-12T00:00:00.000Z',
+    description: "Last updated date of the subscription",
+    example: "2023-07-12T00:00:00.000Z",
     required: false,
   })
   @IsISO8601()
@@ -72,8 +71,8 @@ export class CreateApiKeyDto {
   updatedAt?: Date | null = null;
 
   @ApiProperty({
-    description: 'User who last updated the subscription',
-    example: 'user2',
+    description: "User who last updated the subscription",
+    example: "user2",
     required: false,
   })
   @IsString()
@@ -81,8 +80,8 @@ export class CreateApiKeyDto {
   updateBy?: string;
 
   @ApiProperty({
-    description: 'Deletion date of the subscription',
-    example: '2023-07-13T00:00:00.000Z',
+    description: "Deletion date of the subscription",
+    example: "2023-07-13T00:00:00.000Z",
     required: false,
   })
   @IsISO8601()
@@ -90,8 +89,8 @@ export class CreateApiKeyDto {
   deletedAt?: Date | null = null;
 
   @ApiProperty({
-    description: 'User who deleted the subscription',
-    example: 'user3',
+    description: "User who deleted the subscription",
+    example: "user3",
     required: false,
   })
   @IsString()

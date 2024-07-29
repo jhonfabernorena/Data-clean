@@ -1,12 +1,10 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { Document } from "mongoose";
 
 export type ApiKeyDocument = ApiKey & Document;
 
 @Schema()
 export class ApiKey {
-
-
   @Prop({ required: true })
   apiKey: string;
 
@@ -38,5 +36,4 @@ export class ApiKey {
   deleteBy: string;
 }
 
-export const ApiKeySchema =
-  SchemaFactory.createForClass(ApiKey);
+export const ApiKeySchema = SchemaFactory.createForClass(ApiKey);
