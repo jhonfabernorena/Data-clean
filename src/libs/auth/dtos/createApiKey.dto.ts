@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty } from "@nestjs/swagger";
 import {
   IsString,
   IsBoolean,
@@ -7,12 +7,12 @@ import {
   IsNumber,
   IsArray,
   IsNotEmpty,
-} from 'class-validator';
+} from "class-validator";
 
 export class CreateApiKeyDto {
   @ApiProperty({
-    description: 'Name of the system for which the API key is created',
-    example: 'System X',
+    description: "Name of the system for which the API key is created",
+    example: "System X",
   })
   @IsString()
   system_name: string;
@@ -22,8 +22,8 @@ export class CreateApiKeyDto {
   key: string;
 
   @ApiProperty({
-    description: 'Expiration date of the API key',
-    example: '2023-12-31T23:59:59.000Z',
+    description: "Expiration date of the API key",
+    example: "2023-12-31T23:59:59.000Z",
     required: false,
   })
   @IsOptional()
@@ -31,7 +31,7 @@ export class CreateApiKeyDto {
   expiration?: Date;
 
   @ApiProperty({
-    description: 'Status of the API key',
+    description: "Status of the API key",
     example: true,
     required: false,
   })
@@ -40,8 +40,8 @@ export class CreateApiKeyDto {
   isActive?: boolean;
 
   @ApiProperty({
-    description: 'Creation date of the API key',
-    example: '2023-07-11T00:00:00.000Z',
+    description: "Creation date of the API key",
+    example: "2023-07-11T00:00:00.000Z",
     required: false,
   })
   @IsOptional()
@@ -49,8 +49,8 @@ export class CreateApiKeyDto {
   createdAt?: Date | null;
 
   @ApiProperty({
-    description: 'User who created the API key',
-    example: 'user1',
+    description: "User who created the API key",
+    example: "user1",
     required: false,
   })
   @IsOptional()
@@ -58,8 +58,8 @@ export class CreateApiKeyDto {
   createBy?: string;
 
   @ApiProperty({
-    description: 'Last updated date of the API key',
-    example: '2023-07-12T00:00:00.000Z',
+    description: "Last updated date of the API key",
+    example: "2023-07-12T00:00:00.000Z",
     required: false,
   })
   @IsOptional()
@@ -67,8 +67,8 @@ export class CreateApiKeyDto {
   updatedAt?: Date | null;
 
   @ApiProperty({
-    description: 'User who last updated the API key',
-    example: 'user2',
+    description: "User who last updated the API key",
+    example: "user2",
     required: false,
   })
   @IsOptional()
@@ -76,8 +76,8 @@ export class CreateApiKeyDto {
   updateBy?: string;
 
   @ApiProperty({
-    description: 'Deletion date of the API key',
-    example: '2023-07-13T00:00:00.000Z',
+    description: "Deletion date of the API key",
+    example: "2023-07-13T00:00:00.000Z",
     required: false,
   })
   @IsOptional()
@@ -85,8 +85,8 @@ export class CreateApiKeyDto {
   deletedAt?: Date | null;
 
   @ApiProperty({
-    description: 'User who deleted the API key',
-    example: 'user3',
+    description: "User who deleted the API key",
+    example: "user3",
     required: false,
   })
   @IsOptional()
@@ -94,8 +94,8 @@ export class CreateApiKeyDto {
   deleteBy?: string;
 
   @ApiProperty({
-    description: 'Description of the API key',
-    example: 'API key for accessing System X services',
+    description: "Description of the API key",
+    example: "API key for accessing System X services",
     required: false,
   })
   @IsOptional()
@@ -103,8 +103,8 @@ export class CreateApiKeyDto {
   description?: string;
 
   @ApiProperty({
-    description: 'Last usage date of the API key',
-    example: '2023-07-14T12:00:00.000Z',
+    description: "Last usage date of the API key",
+    example: "2023-07-14T12:00:00.000Z",
     required: false,
   })
   @IsOptional()
@@ -112,7 +112,7 @@ export class CreateApiKeyDto {
   lastUsedAt?: Date | null;
 
   @ApiProperty({
-    description: 'Maximum usage limit of the API key',
+    description: "Maximum usage limit of the API key",
     example: 1000,
     required: false,
   })
@@ -121,7 +121,7 @@ export class CreateApiKeyDto {
   maxUsage?: number | null;
 
   @ApiProperty({
-    description: 'Current usage count of the API key',
+    description: "Current usage count of the API key",
     example: 50,
     required: false,
   })
@@ -130,8 +130,8 @@ export class CreateApiKeyDto {
   usageCount?: number;
 
   @ApiProperty({
-    description: 'Allowed IP addresses for the API key',
-    example: ['192.168.0.1', '10.0.0.1'],
+    description: "Allowed IP addresses for the API key",
+    example: ["192.168.0.1", "10.0.0.1"],
     required: false,
     isArray: true,
     type: String,
@@ -142,8 +142,8 @@ export class CreateApiKeyDto {
   allowedIps?: string[];
 
   @ApiProperty({
-    description: 'Permissions granted to the API key',
-    example: ['read', 'write'],
+    description: "Permissions granted to the API key",
+    example: ["read", "write"],
     required: false,
     isArray: true,
     type: String,

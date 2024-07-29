@@ -5,8 +5,8 @@ import {
   UnauthorizedException,
   InternalServerErrorException,
   Logger,
-} from '@nestjs/common';
-import { AuthService } from '../service/api-key.service';
+} from "@nestjs/common";
+import { AuthService } from "../service/api-key.service";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -17,26 +17,26 @@ export class AuthGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     try {
       const request = context.switchToHttp().getRequest();
-      const apiKey = request.headers['x-api-key'];
+      const apiKey = request.headers["x-api-key"];
       if (!apiKey) {
-        this.logger.warn('API key is missing');
-        throw new UnauthorizedException('API key is missing');
+        this.logger.warn("API key is missing");
+        throw new UnauthorizedException("API key is missing");
       }
 
       try {
         const isValid = await this.authService.validateApiKey(apiKey);
         if (!isValid) {
-          this.logger.warn('Invalid API key');
-          throw new UnauthorizedException('Invalid API key');
+          this.logger.warn("Invalid API key");
+          throw new UnauthorizedException("Invalid API key");
         }
-        this.logger.log('API key is valid');
+        this.logger.log("API key is valid");
         return true;
       } catch (error) {
-        this.logger.error('Error validating API key', error.stack);
-        throw new InternalServerErrorException('Error validating API key');
+        this.logger.error("Error validating API key", error.stack);
+        throw new InternalServerErrorException("Error validating API key");
       }
     } catch (error) {
-      this.logger.error('Unexpected error in AuthGuard', error.stack);
+      this.logger.error("Unexpected error in AuthGuard", error.stack);
       throw new InternalServerErrorException(error.message);
     }
   }

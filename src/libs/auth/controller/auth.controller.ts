@@ -9,7 +9,7 @@ import {
   HttpStatus,
   HttpException,
   Query,
-} from '@nestjs/common';
+} from "@nestjs/common";
 import {
   ApiTags,
   ApiOperation,
@@ -20,31 +20,31 @@ import {
   ApiQuery,
   ApiBody,
   ApiHeader,
-} from '@nestjs/swagger';
-import { CreateApiKeyDto } from '../dtos/createApiKey.dto';
-import { UpdateApiKeyDto } from '../dtos/updateApiKey.dto';
-import { AuthService } from '../service/api-key.service';
-import { ApiKey } from '../entities/api-key.entity';
-import { validateKeyDto } from '../dtos/validate.dto';
+} from "@nestjs/swagger";
+import { CreateApiKeyDto } from "../dtos/createApiKey.dto";
+import { UpdateApiKeyDto } from "../dtos/updateApiKey.dto";
+import { AuthService } from "../service/api-key.service";
+import { ApiKey } from "../entities/api-key.entity";
+import { validateKeyDto } from "../dtos/validate.dto";
 
-@ApiTags('API Keys')
-@Controller('api-keys')
+@ApiTags("API Keys")
+@Controller("api-keys")
 export class AuthController {
   constructor(private readonly apiKeyService: AuthService) {}
 
-  @Post('new')
+  @Post("new")
   @ApiHeader({
-    name: 'x-api-key',
-    description: 'API key needed to access this endpoint',
+    name: "x-api-key",
+    description: "API key needed to access this endpoint",
   })
-  @ApiOperation({ summary: 'Create a new API key' })
+  @ApiOperation({ summary: "Create a new API key" })
   @ApiBody({ type: CreateApiKeyDto })
   @ApiResponse({
     status: 201,
-    description: 'The API key has been successfully created.',
+    description: "The API key has been successfully created.",
   })
-  @ApiBadRequestResponse({ description: 'Invalid data provided.' })
-  @ApiInternalServerErrorResponse({ description: 'Internal server error.' })
+  @ApiBadRequestResponse({ description: "Invalid data provided." })
+  @ApiInternalServerErrorResponse({ description: "Internal server error." })
   async create(@Body() createApiKeyDto: CreateApiKeyDto) {
     try {
       return await this.apiKeyService.createApiKey(createApiKeyDto);
@@ -56,19 +56,19 @@ export class AuthController {
     }
   }
 
-  @Post('validate')
+  @Post("validate")
   @ApiHeader({
-    name: 'x-api-key',
-    description: 'API key needed to access this endpoint',
+    name: "x-api-key",
+    description: "API key needed to access this endpoint",
   })
   @ApiBody({
     type: validateKeyDto,
   })
-  @ApiOperation({ summary: 'Validate an API key' })
-  @ApiResponse({ status: 201, description: 'Validation successful.' })
-  @ApiBadRequestResponse({ description: 'Invalid API key provided.' })
-  @ApiInternalServerErrorResponse({ description: 'Internal server error.' })
-  async validateApiKey(@Body('key') key: string) {
+  @ApiOperation({ summary: "Validate an API key" })
+  @ApiResponse({ status: 201, description: "Validation successful." })
+  @ApiBadRequestResponse({ description: "Invalid API key provided." })
+  @ApiInternalServerErrorResponse({ description: "Internal server error." })
+  async validateApiKey(@Body("key") key: string) {
     try {
       return await this.apiKeyService.validateApiKey(key);
     } catch (error) {
@@ -79,25 +79,25 @@ export class AuthController {
     }
   }
 
-  @Get('all')
+  @Get("all")
   @ApiHeader({
-    name: 'x-api-key',
-    description: 'API key needed to access this endpoint',
+    name: "x-api-key",
+    description: "API key needed to access this endpoint",
   })
-  @ApiOperation({ summary: 'Get all API keys' })
-  @ApiQuery({ name: 'page', type: Number, required: false })
-  @ApiQuery({ name: 'limit', type: Number, required: false })
+  @ApiOperation({ summary: "Get all API keys" })
+  @ApiQuery({ name: "page", type: Number, required: false })
+  @ApiQuery({ name: "limit", type: Number, required: false })
   @ApiResponse({
     status: 200,
-    description: 'API keys retrieved successfully.',
+    description: "API keys retrieved successfully.",
     type: ApiKey,
     isArray: true,
   })
-  @ApiBadRequestResponse({ description: 'Invalid query parameters provided.' })
-  @ApiInternalServerErrorResponse({ description: 'Internal server error.' })
+  @ApiBadRequestResponse({ description: "Invalid query parameters provided." })
+  @ApiInternalServerErrorResponse({ description: "Internal server error." })
   async getAll(
-    @Query('page') page: number,
-    @Query('limit') limit: number,
+    @Query("page") page: number,
+    @Query("limit") limit: number,
   ): Promise<ApiKey[]> {
     try {
       return await this.apiKeyService.findAll(page, limit);
@@ -109,20 +109,20 @@ export class AuthController {
     }
   }
 
-  @Get(':id')
+  @Get(":id")
   @ApiHeader({
-    name: 'x-api-key',
-    description: 'API key needed to access this endpoint',
+    name: "x-api-key",
+    description: "API key needed to access this endpoint",
   })
-  @ApiOperation({ summary: 'Get API key by ID' })
-  @ApiParam({ name: 'id', type: 'string', description: 'API key ID' })
+  @ApiOperation({ summary: "Get API key by ID" })
+  @ApiParam({ name: "id", type: "string", description: "API key ID" })
   @ApiResponse({
     status: 200,
-    description: 'API key retrieved successfully.',
+    description: "API key retrieved successfully.",
     type: ApiKey,
   })
-  @ApiInternalServerErrorResponse({ description: 'Internal server error.' })
-  async findOne(@Param('id') id: string) {
+  @ApiInternalServerErrorResponse({ description: "Internal server error." })
+  async findOne(@Param("id") id: string) {
     try {
       return await this.apiKeyService.getApiKey(id);
     } catch (error) {
@@ -133,19 +133,19 @@ export class AuthController {
     }
   }
 
-  @Patch(':id')
+  @Patch(":id")
   @ApiHeader({
-    name: 'x-api-key',
-    description: 'API key needed to access this endpoint',
+    name: "x-api-key",
+    description: "API key needed to access this endpoint",
   })
-  @ApiOperation({ summary: 'Update an API key by ID' })
-  @ApiParam({ name: 'id', type: 'string', description: 'API key ID' })
+  @ApiOperation({ summary: "Update an API key by ID" })
+  @ApiParam({ name: "id", type: "string", description: "API key ID" })
   @ApiBody({ type: UpdateApiKeyDto })
-  @ApiResponse({ status: 200, description: 'API key updated successfully.' })
-  @ApiBadRequestResponse({ description: 'Invalid data provided.' })
-  @ApiInternalServerErrorResponse({ description: 'Internal server error.' })
+  @ApiResponse({ status: 200, description: "API key updated successfully." })
+  @ApiBadRequestResponse({ description: "Invalid data provided." })
+  @ApiInternalServerErrorResponse({ description: "Internal server error." })
   async update(
-    @Param('id') id: string,
+    @Param("id") id: string,
     @Body() updateApiKeyDto: UpdateApiKeyDto,
   ) {
     try {
@@ -158,22 +158,22 @@ export class AuthController {
     }
   }
 
-  @Delete(':id')
+  @Delete(":id")
   @ApiHeader({
-    name: 'x-api-key',
-    description: 'API key needed to access this endpoint',
+    name: "x-api-key",
+    description: "API key needed to access this endpoint",
   })
-  @ApiOperation({ summary: 'Revoke an API key by ID' })
-  @ApiParam({ name: 'id', type: 'string', description: 'API key ID' })
+  @ApiOperation({ summary: "Revoke an API key by ID" })
+  @ApiParam({ name: "id", type: "string", description: "API key ID" })
   @ApiResponse({
     status: 200,
-    description: 'API key revoked successfully.',
+    description: "API key revoked successfully.",
   })
-  @ApiInternalServerErrorResponse({ description: 'Internal server error.' })
-  async remove(@Param('id') id: string) {
+  @ApiInternalServerErrorResponse({ description: "Internal server error." })
+  async remove(@Param("id") id: string) {
     try {
       await this.apiKeyService.revokeApiKey(id);
-      return { message: 'API key revoked successfully' };
+      return { message: "API key revoked successfully" };
     } catch (error) {
       throw new HttpException(
         error.message,
