@@ -16,15 +16,15 @@ import {
   ApiQuery,
   ApiHeader,
 } from '@nestjs/swagger';
-import { ApiKeySubscriptionService } from '../service/apiKeySubs.service';
-import { CreateApiKeySubscriptionDto } from '../dtos/create-apy-key-subs.dto';
-import { validateSubsKeyDto } from '../dtos/validateSUbkey.dto';
+import { ApiKeyService } from '../service/apiKey.service';
+import { CreateApiKeyDto } from '../dtos/create-apy-key.dto';
+import { validateKeyDto } from '../dtos/validatekey.dto';
 
 @ApiTags('Key Subscriptions')
 @Controller('key-subscription')
-export class ApiKeySubscriptionController {
+export class ApiKeyController {
   constructor(
-    private readonly apiKeySubscriptionService: ApiKeySubscriptionService,
+    private readonly apiKeyService: ApiKeyService,
   ) {}
 
   @Post('new')
@@ -32,20 +32,20 @@ export class ApiKeySubscriptionController {
     name: 'x-api-key',
     description: 'API key needed to access this endpoint',
   })
-  @ApiOperation({ summary: 'Create a new API key subscription' })
-  @ApiBody({ type: CreateApiKeySubscriptionDto })
+  @ApiOperation({ summary: 'Create a new API key' })
+  @ApiBody({ type: CreateApiKeyDto })
   @ApiResponse({
     status: 201,
-    description: 'The API key subscription has been successfully created.',
+    description: 'The API key has been successfully created.',
   })
   @ApiBadRequestResponse({ description: 'Invalid data provided.' })
   @ApiInternalServerErrorResponse({ description: 'Internal server error.' })
   async create(
-    @Body() createApiKeySubscriptionDto: CreateApiKeySubscriptionDto,
+    @Body() CreateApiKeyDto: CreateApiKeyDto,
   ) {
     try {
-      return await this.apiKeySubscriptionService.create(
-        createApiKeySubscriptionDto,
+      return await this.apiKeyService.create(
+        CreateApiKeyDto,
       );
     } catch (error) {
       throw new InternalServerErrorException(error.message);
@@ -58,7 +58,7 @@ export class ApiKeySubscriptionController {
     description: 'API key needed to access this endpoint',
   })
   @ApiBody({
-    type: validateSubsKeyDto,
+    type: validateKeyDto,
   })
   @ApiOperation({ summary: 'Validate an API key' })
   @ApiResponse({ status: 201, description: 'Validation successful.' })
@@ -66,31 +66,12 @@ export class ApiKeySubscriptionController {
   @ApiInternalServerErrorResponse({ description: 'Internal server error.' })
   async validateApiKey(@Body('apiKey') apiKey: string) {
     try {
-      return await this.apiKeySubscriptionService.validateApiKey(apiKey);
+      return await this.apiKeyService.validateApiKey(apiKey);
     } catch (error) {
       throw new InternalServerErrorException(error.message);
     }
   }
 
-  @Post('cancel')
-  @ApiHeader({
-    name: 'x-api-key',
-    description: 'API key needed to access this endpoint',
-  })
-  @ApiOperation({ summary: 'Cancel an API key subscription' })
-  @ApiResponse({
-    status: 201,
-    description: 'API key subscription canceled successfully.',
-  })
-  @ApiBadRequestResponse({ description: 'Invalid subscription ID provided.' })
-  @ApiInternalServerErrorResponse({ description: 'Internal server error.' })
-  async cancelApiKey(@Body('_id') id: string) {
-    try {
-      return await this.apiKeySubscriptionService.cancelApiKey(id);
-    } catch (error) {
-      throw new InternalServerErrorException(error.message);
-    }
-  }
 
   @Get('keys')
   @ApiHeader({
@@ -104,7 +85,7 @@ export class ApiKeySubscriptionController {
   @ApiInternalServerErrorResponse({ description: 'Internal server error.' })
   async getApiKeys(@Query('limit') limit: number, @Query('type') type: string) {
     try {
-      return await this.apiKeySubscriptionService.getApiKeys(limit, type);
+      return await this.apiKeyService.getApiKeys(limit, type);
     } catch (error) {
       throw new InternalServerErrorException(error.message);
     }
