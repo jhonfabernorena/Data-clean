@@ -20,10 +20,8 @@ import { ApiKeyService } from "../service/apiKey.service";
 import { CreateApiKeyDto } from "../dtos/create-apy-key.dto";
 import { validateKeyDto } from "../dtos/validatekey.dto";
 
-@ApiTags('Api-key')
-@Controller('api-key')
-
-
+@ApiTags("Api-key")
+@Controller("api-key")
 export class ApiKeyController {
   constructor(private readonly apiKeyService: ApiKeyService) {}
 

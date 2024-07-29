@@ -3,8 +3,8 @@ import {
   Catch,
   ArgumentsHost,
   UnauthorizedException,
-} from '@nestjs/common';
-import { Request, Response } from 'express';
+} from "@nestjs/common";
+import { Request, Response } from "express";
 
 @Catch(UnauthorizedException)
 export class UnauthorizedExceptionFilter implements ExceptionFilter {
@@ -19,7 +19,7 @@ export class UnauthorizedExceptionFilter implements ExceptionFilter {
       statusCode: status,
       timestamp: new Date().toISOString(),
       path: request.url,
-      message: exception.message || 'Unauthorized',
+      message: exception.message || "Unauthorized",
     });
   }
 }
