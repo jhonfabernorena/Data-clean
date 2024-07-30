@@ -4,7 +4,7 @@ import { MongooseModule } from "@nestjs/mongoose";
 import { ApiKey, ApiKeySchema } from "./libs/api-key/entities/apikey.entity";
 import { ApiKeyController } from "./libs/api-key/controllers/apikey.controller";
 import { ApiKeyService } from "./libs/api-key/service/apiKey.service";
-import { CloudinaryModule } from "./libs/cloudinary/cloudinary.module";
+import { CloudinaryModule } from "./modules/cloudinary/cloudinary.module";
 
 @Module({
   imports: [
