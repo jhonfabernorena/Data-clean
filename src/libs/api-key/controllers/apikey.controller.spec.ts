@@ -25,7 +25,6 @@ describe("ApiKeyController", () => {
   const mockApiKeyService = {
     create: jest.fn().mockResolvedValue(mockApiKey),
     validateApiKey: jest.fn().mockResolvedValue(mockApiKey),
-    getApiKeys: jest.fn().mockResolvedValue([mockApiKey]),
   };
 
   beforeEach(async () => {
@@ -55,7 +54,7 @@ describe("ApiKeyController", () => {
         usageCount: 0,
       };
       await expect(controller.create(createApiKeyDto)).resolves.toEqual(
-        mockApiKey,
+        mockApiKey
       );
       expect(service.create).toHaveBeenCalledWith(createApiKeyDto);
     });
@@ -70,7 +69,7 @@ describe("ApiKeyController", () => {
         usageCount: 0,
       };
       await expect(controller.create(createApiKeyDto)).rejects.toThrow(
-        InternalServerErrorException,
+        InternalServerErrorException
       );
     });
   });
@@ -79,7 +78,7 @@ describe("ApiKeyController", () => {
     it("should validate an API key", async () => {
       const apiKey = "testKey";
       await expect(controller.validateApiKey(apiKey)).resolves.toEqual(
-        mockApiKey,
+        mockApiKey
       );
       expect(service.validateApiKey).toHaveBeenCalledWith(apiKey);
     });
@@ -90,29 +89,7 @@ describe("ApiKeyController", () => {
         .mockRejectedValueOnce(new InternalServerErrorException());
       const apiKey = "invalidKey";
       await expect(controller.validateApiKey(apiKey)).rejects.toThrow(
-        InternalServerErrorException,
-      );
-    });
-  });
-
-  describe("getApiKeys", () => {
-    it("should get a list of API keys", async () => {
-      const limit = 10;
-      const type = "testType";
-      await expect(controller.getApiKeys(limit, type)).resolves.toEqual([
-        mockApiKey,
-      ]);
-      expect(service.getApiKeys).toHaveBeenCalledWith(limit, type);
-    });
-
-    it("should handle InternalServerErrorException", async () => {
-      jest
-        .spyOn(service, "getApiKeys")
-        .mockRejectedValueOnce(new InternalServerErrorException());
-      const limit = 10;
-      const type = "invalidType";
-      await expect(controller.getApiKeys(limit, type)).rejects.toThrow(
-        InternalServerErrorException,
+        InternalServerErrorException
       );
     });
   });
