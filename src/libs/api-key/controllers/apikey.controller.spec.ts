@@ -54,7 +54,7 @@ describe("ApiKeyController", () => {
         usageCount: 0,
       };
       await expect(controller.create(createApiKeyDto)).resolves.toEqual(
-        mockApiKey
+        mockApiKey,
       );
       expect(service.create).toHaveBeenCalledWith(createApiKeyDto);
     });
@@ -69,7 +69,7 @@ describe("ApiKeyController", () => {
         usageCount: 0,
       };
       await expect(controller.create(createApiKeyDto)).rejects.toThrow(
-        InternalServerErrorException
+        InternalServerErrorException,
       );
     });
   });
@@ -78,7 +78,7 @@ describe("ApiKeyController", () => {
     it("should validate an API key", async () => {
       const apiKey = "testKey";
       await expect(controller.validateApiKey(apiKey)).resolves.toEqual(
-        mockApiKey
+        mockApiKey,
       );
       expect(service.validateApiKey).toHaveBeenCalledWith(apiKey);
     });
@@ -89,7 +89,7 @@ describe("ApiKeyController", () => {
         .mockRejectedValueOnce(new InternalServerErrorException());
       const apiKey = "invalidKey";
       await expect(controller.validateApiKey(apiKey)).rejects.toThrow(
-        InternalServerErrorException
+        InternalServerErrorException,
       );
     });
   });
