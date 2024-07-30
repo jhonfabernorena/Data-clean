@@ -5,7 +5,6 @@ import {
   Get,
   Query,
   InternalServerErrorException,
-  UseGuards,
 } from "@nestjs/common";
 import {
   ApiTags,
@@ -20,8 +19,6 @@ import {
 import { ApiKeyService } from "../service/apiKey.service";
 import { CreateApiKeyDto } from "../dtos/create-apy-key.dto";
 import { validateKeyDto } from "../dtos/validatekey.dto";
-
-
 
 @ApiTags("Api-key")
 @Controller("api-key")

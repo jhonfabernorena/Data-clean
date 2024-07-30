@@ -25,7 +25,6 @@ describe("ApiKeyController", () => {
   const mockApiKeyService = {
     create: jest.fn().mockResolvedValue(mockApiKey),
     validateApiKey: jest.fn().mockResolvedValue(mockApiKey),
-    getApiKeys: jest.fn().mockResolvedValue([mockApiKey]),
   };
 
   beforeEach(async () => {
@@ -90,28 +89,6 @@ describe("ApiKeyController", () => {
         .mockRejectedValueOnce(new InternalServerErrorException());
       const apiKey = "invalidKey";
       await expect(controller.validateApiKey(apiKey)).rejects.toThrow(
-        InternalServerErrorException,
-      );
-    });
-  });
-
-  describe("getApiKeys", () => {
-    it("should get a list of API keys", async () => {
-      const limit = 10;
-      const type = "testType";
-      await expect(controller.getApiKeys(limit, type)).resolves.toEqual([
-        mockApiKey,
-      ]);
-      expect(service.getApiKeys).toHaveBeenCalledWith(limit, type);
-    });
-
-    it("should handle InternalServerErrorException", async () => {
-      jest
-        .spyOn(service, "getApiKeys")
-        .mockRejectedValueOnce(new InternalServerErrorException());
-      const limit = 10;
-      const type = "invalidType";
-      await expect(controller.getApiKeys(limit, type)).rejects.toThrow(
         InternalServerErrorException,
       );
     });
