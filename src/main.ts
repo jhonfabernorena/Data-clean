@@ -2,9 +2,13 @@ import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
 import { ConfigService } from "@nestjs/config";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
+import { cloudinaryConfig } from "./libs/cloudinary/cloudinary.config";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  // Inicializa Cloudinary
+  cloudinaryConfig();
 
   // Configuración de variables de entorno
   const configService = app.get(ConfigService);
@@ -23,7 +27,7 @@ async function bootstrap() {
   SwaggerModule.setup("api", app, document);
 
   await app.listen(port);
-  console.log(`Application is running on: http://localhost:3000/api  `);
+  console.log(`Application is running on: http://localhost:${port}/api`);
 }
 
 bootstrap();
